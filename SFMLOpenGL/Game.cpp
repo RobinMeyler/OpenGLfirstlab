@@ -86,58 +86,57 @@ void Game::update()
 	elapsed = clock.getElapsedTime();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			(M_triangleTurner[i].x) = (M_triangleTurner[i].x) - 0.01;
-		}
+		glTranslatef(-0.1, 0, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			(M_triangleTurner[i].x) = (M_triangleTurner[i].x) + 0.01;
-		}
+		glTranslatef(0.1, 0, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			(M_triangleTurner[i].z) = (M_triangleTurner[i].z) - 0.01;
-		}
+		glTranslatef(0, 0.1, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			(M_triangleTurner[i].z) = (M_triangleTurner[i].z) + 0.01;
-		}
+		glTranslatef(0, -0.1, 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
-			for (int i = 0; i < 3; i++)
-			{
-				(M_triangleTurner[i].y) = (M_triangleTurner[i].z) + 0.01;
-			}
+		glRotatef(-0.4, 0, 0, 1);
 	}
-	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+	{
+		glRotatef(0.4, 0, 0, 1);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+	{
+		glScalef(0.99, 0.99, 1);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+	{
+		glScalef(1.01, 1.01, 1);
+	}
 
 	checkInput();
-
-	if (gameShapes == m_shape::triangle)
+	if(gameShapes == m_shape::triangle)
 	{
 		glNewList(index, GL_COMPILE);
 		glBegin(GL_TRIANGLES);
 		{
-
 			glVertex3f(M_triangleTurner[0].x, M_triangleTurner[0].y, M_triangleTurner[0].z);
 			glVertex3f(M_triangleTurner[1].x, M_triangleTurner[1].y, M_triangleTurner[1].z);
 			glVertex3f(M_triangleTurner[2].x, M_triangleTurner[2].y, M_triangleTurner[2].z);
 			glColor3f(0.0f, 0.0f, 1.0f);
-
+			
+			glTranslatef(0, 0, 0);
+			
 		}
 		glEnd();
 		glEndList();
-
+		
+		//glRotatef(0.1, 0, 0, 1);
+		
 		glNewList(index + 1, GL_COMPILE);
 		glBegin(GL_TRIANGLES);
 		{
@@ -164,6 +163,7 @@ void Game::update()
 		}
 		glEnd();
 		glEndList();
+
 	}
 	else if (gameShapes == m_shape::triangleFan)
 	{
@@ -312,7 +312,7 @@ void Game::update()
 
 	if (flip)
 	{
-		rotationAngle += 0.005f;
+		rotationAngle += 1.0f;
 
 		if (rotationAngle > 360.0f)
 		{
@@ -345,10 +345,6 @@ void Game::draw()
 	//glTranslatef(0, 0, -0.01);
 	if (gameShapes == m_shape::triangle)
 	{
-		
-		glTranslatef(0, 0, 0);
-		glRotatef(rotationAngle, 0, 0, 1);
-		glScalef(1, 1, 1);
 	}
 	glCallList(current);
 	 // Uncomment for Part 2
